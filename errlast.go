@@ -73,7 +73,7 @@ func flattenTypes(fields []*ast.Field) []ast.Expr {
 
 // isError reports whether expr names the builtin error type.
 func isError(pass *analysis.Pass, expr ast.Expr) bool {
-	named, ok := pass.TypesInfo.TypeOf(expr).(*types.Named)
+	named, ok := types.Unalias(pass.TypesInfo.TypeOf(expr)).(*types.Named)
 	if !ok || named.Obj().Pkg() != nil {
 		return false
 	}

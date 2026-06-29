@@ -44,3 +44,12 @@ func closures() {
 
 // FuncField is a function-typed signature in a type definition.
 type FuncField func() (error, int) // want "error must be the last return value"
+
+// E is an alias of the builtin error type; results typed through it must obey the convention.
+type E = error
+
+// aliasBad returns an aliased error not last.
+func aliasBad() (E, int) { return nil, 0 } // want "error must be the last return value"
+
+// aliasGood returns an aliased error last.
+func aliasGood() (int, E) { return 0, nil }
